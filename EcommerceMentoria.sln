@@ -9,11 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EM.Domain", "EM.Domain\EM.D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{BD304217-5702-4E50-BA05-B7640F3742FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EM.Data", "EM.Data\EM.Data.csproj", "{1AD6E605-1168-415E-AB53-A9343C2B1EE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EM.Data", "EM.Data\EM.Data.csproj", "{1AD6E605-1168-415E-AB53-A9343C2B1EE2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apresentacao", "Apresentacao", "{09FED2C7-2867-4900-A9B2-6FD43349BA5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EM.Apresentacao", "EM.Apresentacao\EM.Apresentacao.csproj", "{F2F200F0-B1CD-4228-87D1-59F97527057B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EM.Apresentacao", "EM.Apresentacao\EM.Apresentacao.csproj", "{F2F200F0-B1CD-4228-87D1-59F97527057B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

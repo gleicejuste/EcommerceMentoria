@@ -1,7 +1,7 @@
 ﻿
 using EM.Domain.Entidades;
 
-namespace EM.Data.Repostory
+namespace EM.Data.Repository
 {
     public interface IClienteRepository
     {

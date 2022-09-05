@@ -5,20 +5,13 @@ namespace EM.Domain.Entidades
 {
     public class Telefone
     {
-        [Key]
-        private Guid Id { get; set; }
+        public Guid Id { get; set; }
+        public Cliente Cliente { get; set; }
 
-        [ForeignKey("ClienteId")]
-        private Cliente Cliente { get; set; }
+        public int Tipo { get; set; }
 
-        private Guid ClienteId { get; set; }
+        public string Numero { get; set; }
 
-        private int Tipo { get; set; }
-
-        private string Numero { get; set; }
-
-        [DataType(DataType.Date)]
-        [Column("cadastrado_em")]
-        private DateTime CadastradoEm { get; set; }
+        public DateTime DataCadastro { get; set; }
     }
 }

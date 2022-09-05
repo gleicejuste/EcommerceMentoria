@@ -1,6 +1,7 @@
 ﻿using EM.Domain.Entidades;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace EM.Data
 {
     public class ContextoPrincipal : DbContext
@@ -12,6 +13,8 @@ namespace EM.Data
         }
 
         public DbSet<Cliente> Clientes { get; set; }
-        
+        public DbSet<Telefone> Telefones { get; set; }
+
     }
 }
+
