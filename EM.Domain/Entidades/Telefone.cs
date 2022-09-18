@@ -6,6 +6,7 @@ namespace EM.Domain.Entidades
     public class Telefone
     {
         public Guid Id { get; set; }
+
         public Cliente Cliente { get; set; }
 
         public int Tipo { get; set; }
@@ -13,5 +14,7 @@ namespace EM.Domain.Entidades
         public string Numero { get; set; }
 
         public DateTime DataCadastro { get; set; }
+
+
     }
 }

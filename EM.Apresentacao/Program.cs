@@ -13,7 +13,7 @@ builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddDbContext<ContextoPrincipal>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("EMConnectionString"), b => b.MigrationsAssembly("EM.Apresentacao")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("EMConnectionString"), b => b.MigrationsAssembly("EM.Apresentacao")));
 
 
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();

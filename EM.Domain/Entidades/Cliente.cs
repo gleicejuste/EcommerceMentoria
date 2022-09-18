@@ -18,5 +18,7 @@ namespace EM.Domain.Entidades
         public DateTime CadastradoEm { get; set; }
 
         public bool Ativo { get; set; }
+
+       // public ICollection<Telefone> Telefones { get; set; }  
     }
 }

@@ -9,14 +9,30 @@ namespace EM.Data.Configuration
         public void Configure(EntityTypeBuilder<Telefone> builder)
         {
             builder.HasKey(telefone => telefone.Id);
-            builder.Property(telefone => telefone.Id).IsRequired();
+
+            builder.Property(telefone => telefone.Id)
+                .IsRequired()
+                .IsUnicode(false);
+
             builder.Property(telefone => telefone.Numero)
                 .IsRequired()
-                 .HasMaxLength(11)
+                .HasMaxLength(11)
                 .IsUnicode(false);
-            builder.Property(telefone => telefone.DataCadastro).IsRequired();
-            builder.Property(telefone => telefone.Cliente).IsRequired();
-            builder.Property(telefone => telefone.Tipo).IsRequired().HasMaxLength(1);
+
+            builder.Property(telefone => telefone.DataCadastro)
+                .IsRequired();
+
+            builder.Property(telefone => telefone.Cliente.Id)
+                .IsRequired();
+
+            builder.HasOne(telefone => telefone.Cliente);
+               // .WithMany(cliente => cliente.Telefones)
+                //.HasForeignKey(telefone => telefone.Cliente.Id);
+
+            builder.Property(telefone => telefone.Tipo)
+                .IsRequired()
+                .IsUnicode(false)
+                .HasMaxLength(1);
 
 
 
