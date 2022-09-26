@@ -14,10 +14,10 @@ namespace EM.Apresentacao.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Documento = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    HashSenha = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Nome = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
+                    Documento = table.Column<string>(type: "varchar(11)", unicode: false, maxLength: 11, nullable: false),
+                    Email = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
+                    HashSenha = table.Column<string>(type: "varchar(12)", unicode: false, maxLength: 12, nullable: false),
                     CadastradoEm = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Ativo = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -30,10 +30,10 @@ namespace EM.Apresentacao.Migrations
                 name: "Telefones",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", unicode: false, nullable: false),
                     ClienteId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Tipo = table.Column<int>(type: "int", nullable: false),
-                    Numero = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Tipo = table.Column<int>(type: "int", unicode: false, maxLength: 1, nullable: false),
+                    Numero = table.Column<string>(type: "varchar(11)", unicode: false, maxLength: 11, nullable: false),
                     DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -46,6 +46,12 @@ namespace EM.Apresentacao.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Clientes_Email_Ativo",
+                table: "Clientes",
+                columns: new[] { "Email", "Ativo" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Telefones_ClienteId",

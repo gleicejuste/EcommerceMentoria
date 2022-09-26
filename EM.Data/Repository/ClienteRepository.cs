@@ -5,22 +5,33 @@ namespace EM.Data.Repository
 {
     public class ClienteRepository : IClienteRepository
     {
-        readonly ContextoPrincipal _contextoPincipal;
+        readonly ContextoPrincipal _contextoPrincipal;
 
-        public ClienteRepository(ContextoPrincipal contextoPincipal)
+        public ClienteRepository(ContextoPrincipal contextoPrincipal)
         {
-            _contextoPincipal = contextoPincipal;
+            _contextoPrincipal = contextoPrincipal;
         }
 
-        public void Add(Cliente entity)
+        public void Add(Cliente clienteSalvar)
         {
-            _contextoPincipal.Add(entity);
-            _contextoPincipal.SaveChanges();
+            _contextoPrincipal.Add(clienteSalvar);
+            _contextoPrincipal.SaveChanges();
         }
 
         public IQueryable<Cliente> GetAll()
         {
-            return _contextoPincipal.Clientes;
+            return _contextoPrincipal.Clientes;
+        }
+
+        public Cliente GetById(Guid id)
+        {
+            return _contextoPrincipal.Clientes.FirstOrDefault(cliente => cliente.Id.Equals(id));
+        }
+
+        public void Editar(Cliente clienteSalvar)
+        {
+            _contextoPrincipal.Update(clienteSalvar);
+            _contextoPrincipal.SaveChanges();
         }
     }
 }

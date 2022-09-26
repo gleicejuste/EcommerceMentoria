@@ -4,6 +4,7 @@ using EM.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EM.Apresentacao.Migrations
 {
     [DbContext(typeof(ClienteService))]
-    partial class ContextoPrincipalModelSnapshot : ModelSnapshot
+    [Migration("20220919122735_create_cliente_telefone")]
+    partial class create_cliente_telefone
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,7 +104,7 @@ namespace EM.Apresentacao.Migrations
                     b.HasOne("EM.Domain.Entidades.Cliente", "Cliente")
                         .WithMany("Telefones")
                         .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Cliente");

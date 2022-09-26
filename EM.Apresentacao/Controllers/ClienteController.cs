@@ -1,8 +1,6 @@
-﻿
-
-using EM.Data;
-using EM.Data.Repository;
-using EM.Domain.Entidades;
+﻿using EM.Domain.Entidades;
+using EM.Domain.Modelos;
+using EM.Service.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EM.Apresentacao.Controllers
@@ -13,26 +11,64 @@ namespace EM.Apresentacao.Controllers
     public class ClienteController : ControllerBase
     {
 
-        readonly ContextoPrincipal _contextoPrincipal;
+        readonly ClienteService _service;
 
-        public ClienteController(ContextoPrincipal contextoPrincipal)
+        public ClienteController(ClienteService service)
         {
-            _contextoPrincipal = contextoPrincipal;
+            _service = service;
         }
 
         [HttpPost]
-        public void Add([FromBody] Cliente clienteSalvar)
+        public IActionResult Add([FromBody] NovoClienteRequest clienteRequest)
         {
-            ClienteRepository repo = new ClienteRepository(_contextoPrincipal);
-            repo.Add(clienteSalvar);
-            
+            _service.Add(clienteRequest);
+            return Ok();
         }
 
         [HttpGet]
         public IEnumerable<Cliente> Get()
         {
-            ClienteRepository repo = new ClienteRepository(_contextoPrincipal);
-            return repo.GetAll();
+            return (IEnumerable<Cliente>)Ok(_service.GetAll());
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(Guid id)
+        {
+            Cliente cliente = _service.GetById(id);
+            if (cliente != null)
+            {
+                //ReadFilmeDto filmeDto = _mapper.Map<ReadFilmeDto>(filme);
+                return Ok(cliente);
+            }
+            return NotFound();
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Put(Guid id, [FromBody] NovoClienteRequest clienteRequest)
+        {
+            Cliente cliente = _service.GetById(id);
+            if (cliente == null)
+            {
+                return NotFound();
+            }
+
+            //_mapper.Map(filmeDto, filme);
+            //_context.SaveChanges();
+            //return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            //Filme filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
+            //if (filme == null)
+            //{
+            //    return NotFound();
+            //}
+
+            //_context.Remove(filme);
+            //_context.SaveChanges();
+            //return NoContent();
         }
     }
 }

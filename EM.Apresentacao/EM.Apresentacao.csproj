@@ -26,10 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EM.Data\EM.Data.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
+    <ProjectReference Include="..\EM.Service\EM.Service.csproj" />
   </ItemGroup>
 
 </Project>

@@ -11,9 +11,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EM.Apresentacao.Migrations
 {
-    [DbContext(typeof(ContextoPrincipal))]
-    [Migration("20220918211451_create_cliente_telefone")]
-    partial class create_cliente_telefone
+    [DbContext(typeof(ClienteService))]
+    [Migration("20220919122816_alteracao_cliente_telefone")]
+    partial class alteracao_cliente_telefone
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,21 +38,32 @@ namespace EM.Apresentacao.Migrations
 
                     b.Property<string>("Documento")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(11)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(11)");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("HashSenha")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(12)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(12)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email", "Ativo")
+                        .IsUnique();
 
                     b.ToTable("Clientes");
                 });
@@ -61,6 +72,7 @@ namespace EM.Apresentacao.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .IsUnicode(false)
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ClienteId")
@@ -71,9 +83,13 @@ namespace EM.Apresentacao.Migrations
 
                     b.Property<string>("Numero")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(11)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(11)");
 
                     b.Property<int>("Tipo")
+                        .HasMaxLength(1)
+                        .IsUnicode(false)
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -88,7 +104,7 @@ namespace EM.Apresentacao.Migrations
                     b.HasOne("EM.Domain.Entidades.Cliente", "Cliente")
                         .WithMany("Telefones")
                         .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Cliente");

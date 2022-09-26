@@ -36,13 +36,13 @@ namespace EM.Data.Configuration
                 .IsUnicode(false)
                 .HasMaxLength(12);
 
-            builder.Property(cliente => cliente.CadastradoEm)
+            builder.Property(cliente => cliente.DataCadastro)
                 .IsRequired();
 
             builder.Property(cliente => cliente.Ativo)
                 .IsRequired();
 
-           // builder.HasMany(cliente => cliente.Telefones).WithOne();
+            builder.HasMany(cliente => cliente.Telefones).WithOne().HasForeignKey(telefone => telefone.ClienteId);
 
         }
     }

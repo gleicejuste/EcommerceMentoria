@@ -22,12 +22,13 @@ namespace EM.Data.Configuration
             builder.Property(telefone => telefone.DataCadastro)
                 .IsRequired();
 
-            builder.Property(telefone => telefone.Cliente.Id)
+            builder.Property(telefone => telefone.ClienteId)
                 .IsRequired();
 
-            builder.HasOne(telefone => telefone.Cliente);
-               // .WithMany(cliente => cliente.Telefones)
-                //.HasForeignKey(telefone => telefone.Cliente.Id);
+            builder.HasOne(telefone => telefone.Cliente)
+                .WithMany(cliente => cliente.Telefones)
+                .HasForeignKey(telefone => telefone.ClienteId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Property(telefone => telefone.Tipo)
                 .IsRequired()

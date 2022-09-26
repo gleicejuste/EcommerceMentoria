@@ -1,24 +1,41 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace EM.Domain.Entidades
+﻿namespace EM.Domain.Entidades
 {
     public class Cliente
     {
-    
+        public Cliente(
+            string nome, 
+            string documento, 
+            string email, 
+            string hashSenha, 
+            DateTime dataCadastro,
+            bool ativo,
+            ICollection<Telefone> telefones)
+
+        {
+            Nome = nome;
+            Documento = documento;
+            Email = email;
+            HashSenha = hashSenha;
+            DataCadastro = dataCadastro;
+            Ativo = ativo;
+            Telefones = telefones;
+        }
+
         public Guid Id { get; set; }
 
-        public String Nome { get; set; }
+        public string Nome { get; set; }
 
-        public String Documento { get; set; }
+        public string Documento { get; set; }
 
-        public String Email { get; set; }
+        public string Email { get; set; }
 
-        public String HashSenha { get; set; }
+        public string HashSenha { get; set; }
 
-        public DateTime CadastradoEm { get; set; }
+        public DateTime DataCadastro { get; set; }
 
         public bool Ativo { get; set; }
 
-       // public ICollection<Telefone> Telefones { get; set; }  
+        public ICollection<Telefone> Telefones { get; set; }  
     }
+
 }
