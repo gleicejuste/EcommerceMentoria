@@ -1,5 +1,6 @@
 using EM.Data;
 using EM.Data.Repository;
+using EM.Service;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services
+    .AddData()
+    .AddAppServices();
 
 builder.Services.AddDbContext<ContextoPrincipal>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("EMConnectionString"), b => b.MigrationsAssembly("EM.Apresentacao")));

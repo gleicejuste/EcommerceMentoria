@@ -1,4 +1,6 @@
-﻿namespace EM.Domain.Modelos
+﻿using System.Collections.Generic;
+
+namespace EM.Domain.Modelos
 {
     public class NovoClienteRequest
     {

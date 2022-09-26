@@ -1,74 +1,71 @@
-﻿using EM.Domain.Entidades;
-using EM.Domain.Modelos;
+﻿using EM.Domain.Modelos;
 using EM.Service.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EM.Apresentacao.Controllers
 {
-
     [ApiController]
     [Route("[controller]")]
     public class ClienteController : ControllerBase
     {
+        private readonly IClienteService _service;
 
-        readonly ClienteService _service;
-
-        public ClienteController(ClienteService service)
+        public ClienteController(IClienteService service)
         {
             _service = service;
         }
 
         [HttpPost]
-        public IActionResult Add([FromBody] NovoClienteRequest clienteRequest)
+        public async Task<IActionResult> Add([FromBody] NovoClienteRequest clienteRequest)
         {
-            _service.Add(clienteRequest);
+            await _service.AddAsync(clienteRequest);
             return Ok();
         }
 
         [HttpGet]
-        public IEnumerable<Cliente> Get()
+        public async Task<IActionResult> Get()
         {
-            return (IEnumerable<Cliente>)Ok(_service.GetAll());
+            return Ok(await _service.GetAllAsync());
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetById(Guid id)
-        {
-            Cliente cliente = _service.GetById(id);
-            if (cliente != null)
-            {
-                //ReadFilmeDto filmeDto = _mapper.Map<ReadFilmeDto>(filme);
-                return Ok(cliente);
-            }
-            return NotFound();
-        }
+        // [HttpGet("{id}")]
+        // public IActionResult GetById(Guid id)
+        // {
+        //     Cliente cliente = _service.GetById(id);
+        //     if (cliente != null)
+        //     {
+        //         //ReadFilmeDto filmeDto = _mapper.Map<ReadFilmeDto>(filme);
+        //         return Ok(cliente);
+        //     }
+        //     return NotFound();
+        // }
 
-        [HttpPut("{id}")]
-        public IActionResult Put(Guid id, [FromBody] NovoClienteRequest clienteRequest)
-        {
-            Cliente cliente = _service.GetById(id);
-            if (cliente == null)
-            {
-                return NotFound();
-            }
+        // [HttpPut("{id}")]
+        // public IActionResult Put(Guid id, [FromBody] NovoClienteRequest clienteRequest)
+        // {
+        //     Cliente cliente = _service.GetById(id);
+        //     if (cliente == null)
+        //     {
+        //         return NotFound();
+        //     }
 
-            //_mapper.Map(filmeDto, filme);
-            //_context.SaveChanges();
-            //return NoContent();
-        }
+        //     //_mapper.Map(filmeDto, filme);
+        //     //_context.SaveChanges();
+        //     //return NoContent();
+        // }
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            //Filme filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
-            //if (filme == null)
-            //{
-            //    return NotFound();
-            //}
+        // [HttpDelete("{id}")]
+        // public IActionResult Delete(int id)
+        // {
+        //     //Filme filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
+        //     //if (filme == null)
+        //     //{
+        //     //    return NotFound();
+        //     //}
 
-            //_context.Remove(filme);
-            //_context.SaveChanges();
-            //return NoContent();
-        }
+        //     //_context.Remove(filme);
+        //     //_context.SaveChanges();
+        //     //return NoContent();
+        // }
     }
 }

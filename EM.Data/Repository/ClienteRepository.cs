@@ -1,37 +1,40 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using EM.Domain.Entidades;
+using Microsoft.EntityFrameworkCore;
 
 namespace EM.Data.Repository
 {
     public class ClienteRepository : IClienteRepository
     {
-        readonly ContextoPrincipal _contextoPrincipal;
+        private readonly ContextoPrincipal _contextoPrincipal;
 
         public ClienteRepository(ContextoPrincipal contextoPrincipal)
         {
             _contextoPrincipal = contextoPrincipal;
         }
 
-        public void Add(Cliente clienteSalvar)
+        public async Task AddAsync(Cliente clienteSalvar)
         {
             _contextoPrincipal.Add(clienteSalvar);
-            _contextoPrincipal.SaveChanges();
+            await _contextoPrincipal.SaveChangesAsync();
         }
 
-        public IQueryable<Cliente> GetAll()
+        public async Task<IEnumerable<Cliente>> GetAllAsync()
         {
-            return _contextoPrincipal.Clientes;
+            return await _contextoPrincipal.Clientes.ToListAsync();
         }
 
-        public Cliente GetById(Guid id)
+        public async Task<Cliente> GetByIdAsync(Guid id)
         {
-            return _contextoPrincipal.Clientes.FirstOrDefault(cliente => cliente.Id.Equals(id));
+            return await _contextoPrincipal.Clientes.FindAsync(id);
         }
 
-        public void Editar(Cliente clienteSalvar)
+        public async Task EditAsync(Cliente clienteSalvar)
         {
             _contextoPrincipal.Update(clienteSalvar);
-            _contextoPrincipal.SaveChanges();
+            await _contextoPrincipal.SaveChangesAsync();
         }
     }
 }

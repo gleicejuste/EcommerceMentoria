@@ -1,35 +1,37 @@
-﻿using EM.Domain.Entidades;
+﻿using System;
+using System.Collections.Generic;
+using EM.Domain.Entidades;
 using EM.Domain.Modelos;
 
 namespace EM.Service.Factory
 {
-    public class ClienteFactory
+    public static class ClienteFactory
     {
-
         public static Cliente CriarClienteSalvar(NovoClienteRequest clienteRequest)
         {
+            var dtNow = DateTime.Now;
+
             return new Cliente(
                 clienteRequest.Nome,
                 clienteRequest.Documento,
                 clienteRequest.Email,
                 clienteRequest.HashSenha,
-                new DateTime(),
+                dtNow,
                 true,
-                CriarTelefoneSalvar(clienteRequest.Telefones));
+                CriarTelefoneSalvar(clienteRequest.Telefones, dtNow));
         }
 
-        private static ICollection<Telefone> CriarTelefoneSalvar(ICollection<NovoTelefoneRequest> telefonesRequest)
+        private static ICollection<Telefone> CriarTelefoneSalvar(ICollection<NovoTelefoneRequest> telefonesRequest, DateTime dateTime)
         {
-            List<Telefone> listaTelefones = new List<Telefone>();
+            var listaTelefones = new List<Telefone>();
 
             foreach (var telefoneRequest in telefonesRequest)
             {
-                listaTelefones.Add(new Telefone(telefoneRequest.Tipo, telefoneRequest.Numero, new DateTime()));
+                listaTelefones.Add(new Telefone(telefoneRequest.Tipo, telefoneRequest.Numero, dateTime));
             }
 
             return listaTelefones;
         }
-
 
         //public static Cliente newCliente(ClienteId clienteId, NovoClienteRequest request)
         //{

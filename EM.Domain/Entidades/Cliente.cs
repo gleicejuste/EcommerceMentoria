@@ -1,12 +1,15 @@
-﻿namespace EM.Domain.Entidades
+﻿using System;
+using System.Collections.Generic;
+
+namespace EM.Domain.Entidades
 {
     public class Cliente
     {
         public Cliente(
-            string nome, 
-            string documento, 
-            string email, 
-            string hashSenha, 
+            string nome,
+            string documento,
+            string email,
+            string hashSenha,
             DateTime dataCadastro,
             bool ativo,
             ICollection<Telefone> telefones)
@@ -35,7 +38,7 @@
 
         public bool Ativo { get; set; }
 
-        public ICollection<Telefone> Telefones { get; set; }  
+        public ICollection<Telefone> Telefones { get; set; }
     }
 
 }

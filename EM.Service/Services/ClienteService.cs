@@ -1,4 +1,6 @@
-﻿using EM.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using EM.Data.Repository;
 using EM.Domain.Entidades;
 using EM.Domain.Modelos;
@@ -6,45 +8,52 @@ using EM.Service.Factory;
 
 namespace EM.Service.Services
 {
-    public class ClienteService
+    public class ClienteService : IClienteService
     {
+        private readonly IClienteRepository _repository;
 
-        readonly ContextoPrincipal _contextoPrincipal;
-        readonly ClienteRepository _repository;
-
-        public ClienteService(ContextoPrincipal contextoPrincipal)
+        public ClienteService(IClienteRepository repository)
         {
-            _contextoPrincipal = contextoPrincipal;
-            _repository = new ClienteRepository(_contextoPrincipal);
+            _repository = repository;
         }
 
-        public void Add(NovoClienteRequest clienteRequest)
+        public async Task AddAsync(NovoClienteRequest request)
         {
-            Cliente clienteSalvar = ClienteFactory.CriarClienteSalvar(clienteRequest);
-            _repository.Add(clienteSalvar);
+            Cliente clienteSalvar = ClienteFactory.CriarClienteSalvar(request);
+            await _repository.AddAsync(clienteSalvar);
         }
 
-        public IQueryable<Cliente> GetAll()
+        public Task<IEnumerable<Cliente>> GetAllAsync()
         {
-            return _repository.GetAll();
+            throw new NotImplementedException();
         }
 
-        public Cliente GetById(Guid id)
+        public Task<Cliente> GetByIdAsync(Guid id)
         {
-            return _repository.GetById(id);
+            throw new NotImplementedException();
         }
 
-        public void Put(Guid id, NovoClienteRequest clienteRequest)
-        {
-            Cliente cliente = _repository.GetById(id);
-            if (cliente == null)
-            {
-                //return null;
-            }
+        // public IQueryable<Cliente> GetAll()
+        // {
+        //     return _repository.GetAllAsync();
+        // }
 
-            //_mapper.Map(filmeDto, filme);
-            Cliente clienteSalvar = ClienteFactory.CriarClienteSalvar(clienteRequest);
-            _repository.Put(clienteSalvar);
-        }
+        // public Cliente GetById(Guid id)
+        // {
+        //     return _repository.GetById(id);
+        // }
+
+        // public void Put(Guid id, NovoClienteRequest clienteRequest)
+        // {
+        //     Cliente cliente = _repository.GetById(id);
+        //     if (cliente == null)
+        //     {
+        //         //return null;
+        //     }
+
+        //     //_mapper.Map(filmeDto, filme);
+        //     Cliente clienteSalvar = ClienteFactory.CriarClienteSalvar(clienteRequest);
+        //     //  _repository.Put(clienteSalvar);
+        // }
     }
 }

@@ -1,5 +1,5 @@
 ﻿
 namespace EM.Domain.Modelos
 {
-    
+
 }
