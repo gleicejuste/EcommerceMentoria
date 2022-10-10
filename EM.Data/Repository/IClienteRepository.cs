@@ -7,9 +7,10 @@ namespace EM.Data.Repository
 {
     public interface IClienteRepository
     {
-        Task<IEnumerable<Cliente>> GetAllAsync();
-        Task AddAsync(Cliente entity);
-        Task<Cliente> GetByIdAsync(Guid id);
-        Task EditAsync(Cliente clienteSalvar);
+        Task<IEnumerable<Cliente>> PesquisarTodosAsync();
+        Task AdicionarAsync(Cliente entity);
+        Task<Cliente> PesquisarPorIdAsync(Guid id);
+        Task EditarAsync(Cliente clienteSalvar);
+        Task ExcluirAsync(Guid id);
     }
 }

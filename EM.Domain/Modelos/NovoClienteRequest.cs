@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using EM.Domain.Enums;
+using System.Collections.Generic;
 
 namespace EM.Domain.Modelos
 {
@@ -18,9 +19,7 @@ namespace EM.Domain.Modelos
     public class NovoTelefoneRequest
     {
 
-        // configurar campos obrigatórios
-        // 1 - fixo | 2 - celular
-        public int Tipo { get; set; }
+        public TelefoneEnum Tipo { get; set; }
 
         public string Numero { get; set; }
 

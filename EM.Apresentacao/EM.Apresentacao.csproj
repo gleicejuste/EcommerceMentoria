@@ -29,4 +29,8 @@
     <ProjectReference Include="..\EM.Service\EM.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

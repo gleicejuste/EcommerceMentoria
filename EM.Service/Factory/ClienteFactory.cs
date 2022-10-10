@@ -9,25 +9,25 @@ namespace EM.Service.Factory
     {
         public static Cliente CriarClienteSalvar(NovoClienteRequest clienteRequest)
         {
-            var dtNow = DateTime.Now;
+            var dataAgora = DateTime.Now;
 
             return new Cliente(
                 clienteRequest.Nome,
                 clienteRequest.Documento,
                 clienteRequest.Email,
                 clienteRequest.HashSenha,
-                dtNow,
+                dataAgora,
                 true,
-                CriarTelefoneSalvar(clienteRequest.Telefones, dtNow));
+                CriarTelefoneSalvar(clienteRequest.Telefones, dataAgora));
         }
 
-        private static ICollection<Telefone> CriarTelefoneSalvar(ICollection<NovoTelefoneRequest> telefonesRequest, DateTime dateTime)
+        private static ICollection<Telefone> CriarTelefoneSalvar(ICollection<NovoTelefoneRequest> telefonesRequest, DateTime dataAgora)
         {
             var listaTelefones = new List<Telefone>();
 
             foreach (var telefoneRequest in telefonesRequest)
             {
-                listaTelefones.Add(new Telefone(telefoneRequest.Tipo, telefoneRequest.Numero, dateTime));
+                listaTelefones.Add(new Telefone(telefoneRequest.Tipo, telefoneRequest.Numero, dataAgora));
             }
 
             return listaTelefones;

@@ -1,10 +1,11 @@
-﻿using System;
+﻿using EM.Domain.Enums;
+using System;
 
 namespace EM.Domain.Entidades
 {
     public class Telefone
     {
-        public Telefone(int tipo, string numero, DateTime dataCadastro)
+        public Telefone(TelefoneEnum tipo, string numero, DateTime dataCadastro)
         {
             Tipo = tipo;
             Numero = numero;
@@ -15,7 +16,7 @@ namespace EM.Domain.Entidades
 
         public Guid ClienteId { get; set; }
 
-        public int Tipo { get; set; }
+        public TelefoneEnum Tipo { get; set; }
 
         public string Numero { get; set; }
 

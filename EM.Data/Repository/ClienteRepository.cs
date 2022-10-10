@@ -8,33 +8,39 @@ namespace EM.Data.Repository
 {
     public class ClienteRepository : IClienteRepository
     {
-        private readonly ContextoPrincipal _contextoPrincipal;
+        private readonly ContextoPrincipal _dbContext;
 
-        public ClienteRepository(ContextoPrincipal contextoPrincipal)
+        public ClienteRepository(ContextoPrincipal dbContext)
         {
-            _contextoPrincipal = contextoPrincipal;
+            _dbContext = dbContext;
         }
 
-        public async Task AddAsync(Cliente clienteSalvar)
+        public async Task AdicionarAsync(Cliente cliente)
         {
-            _contextoPrincipal.Add(clienteSalvar);
-            await _contextoPrincipal.SaveChangesAsync();
+            _dbContext.Add(cliente);
+            await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Cliente>> GetAllAsync()
+        public async Task<IEnumerable<Cliente>> PesquisarTodosAsync()
         {
-            return await _contextoPrincipal.Clientes.ToListAsync();
+            return await _dbContext.Clientes.ToListAsync();
         }
 
-        public async Task<Cliente> GetByIdAsync(Guid id)
+        public async Task<Cliente> PesquisarPorIdAsync(Guid id)
         {
-            return await _contextoPrincipal.Clientes.FindAsync(id);
+            return await _dbContext.Clientes.FindAsync(id);
         }
 
-        public async Task EditAsync(Cliente clienteSalvar)
+        public async Task EditarAsync(Cliente clienteSalvar)
         {
-            _contextoPrincipal.Update(clienteSalvar);
-            await _contextoPrincipal.SaveChangesAsync();
+            _dbContext.Update(clienteSalvar);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task ExcluirAsync(Guid id)
+        {
+            _dbContext.Remove(id);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

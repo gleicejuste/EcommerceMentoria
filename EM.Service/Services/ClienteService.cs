@@ -17,43 +17,37 @@ namespace EM.Service.Services
             _repository = repository;
         }
 
-        public async Task AddAsync(NovoClienteRequest request)
+        public async Task AdicionarAsync(NovoClienteRequest request)
         {
             Cliente clienteSalvar = ClienteFactory.CriarClienteSalvar(request);
-            await _repository.AddAsync(clienteSalvar);
+            await _repository.AdicionarAsync(clienteSalvar);
         }
 
-        public Task<IEnumerable<Cliente>> GetAllAsync()
+        public async Task<IEnumerable<Cliente>> PesquisarTodosAsync()
         {
-            throw new NotImplementedException();
+            return await _repository.PesquisarTodosAsync();
         }
 
-        public Task<Cliente> GetByIdAsync(Guid id)
+        public async Task<Cliente> PesquisarPorIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _repository.PesquisarPorIdAsync(id);
         }
 
-        // public IQueryable<Cliente> GetAll()
-        // {
-        //     return _repository.GetAllAsync();
-        // }
+        public async Task Editar(Guid id, NovoClienteRequest clienteRequest)
+        {
+            Cliente cliente = await _repository.PesquisarPorIdAsync(id);
+            if (cliente == null)
+             {
+                 throw new DllNotFoundException();
+             }
 
-        // public Cliente GetById(Guid id)
-        // {
-        //     return _repository.GetById(id);
-        // }
+             Cliente clienteSalvar = ClienteFactory.CriarClienteSalvar(clienteRequest);
+             await _repository.EditarAsync(clienteSalvar);
+         }
 
-        // public void Put(Guid id, NovoClienteRequest clienteRequest)
-        // {
-        //     Cliente cliente = _repository.GetById(id);
-        //     if (cliente == null)
-        //     {
-        //         //return null;
-        //     }
-
-        //     //_mapper.Map(filmeDto, filme);
-        //     Cliente clienteSalvar = ClienteFactory.CriarClienteSalvar(clienteRequest);
-        //     //  _repository.Put(clienteSalvar);
-        // }
+        public async Task Excluir(Guid id)
+        {
+            await _repository.ExcluirAsync(id);
+        }
     }
 }
