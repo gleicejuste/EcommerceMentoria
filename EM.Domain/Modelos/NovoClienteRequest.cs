@@ -1,5 +1,5 @@
-﻿using EM.Domain.Enums;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using EM.Domain.Enums;
 
 namespace EM.Domain.Modelos
 {
@@ -18,10 +18,8 @@ namespace EM.Domain.Modelos
 
     public class NovoTelefoneRequest
     {
-
-        public TelefoneEnum Tipo { get; set; }
+        public ETelefone Tipo { get; set; }
 
         public string Numero { get; set; }
-
     }
 }

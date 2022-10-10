@@ -5,6 +5,10 @@ namespace EM.Domain.Entidades
 {
     public class Cliente
     {
+        public Cliente()
+        {
+        }
+
         public Cliente(
             string nome,
             string documento,

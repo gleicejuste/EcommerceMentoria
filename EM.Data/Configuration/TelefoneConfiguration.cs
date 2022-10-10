@@ -25,18 +25,22 @@ namespace EM.Data.Configuration
             builder.Property(telefone => telefone.ClienteId)
                 .IsRequired();
 
+            // Se o enumerador for uma cadeia de caracteres (string)
+            // builder.Property(telefone => telefone.Tipo)
+            //     .IsRequired()
+            //     .HasConversion<string>()
+            //     .IsUnicode(false)
+            //     .HasMaxLength(10);
+
+            // Se o enumerador for um inteiro ou short
+            builder.Property(telefone => telefone.Tipo)
+                .IsRequired()
+                .HasConversion<short>();
+
             builder.HasOne(telefone => telefone.Cliente)
                 .WithMany(cliente => cliente.Telefones)
                 .HasForeignKey(telefone => telefone.ClienteId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Property(telefone => telefone.Tipo)
-                .IsRequired()
-                .IsUnicode(false)
-                .HasMaxLength(1);
-
-
-
         }
     }
 }
