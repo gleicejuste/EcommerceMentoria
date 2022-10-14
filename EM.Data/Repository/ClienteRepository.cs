@@ -37,7 +37,7 @@ namespace EM.Data.Repository
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task ExcluirAsync(Guid id)
+        public async Task ExcluirAsync(Cliente id)
         {
             _dbContext.Remove(id);
             await _dbContext.SaveChangesAsync();

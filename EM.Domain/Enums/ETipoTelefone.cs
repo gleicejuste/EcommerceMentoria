@@ -1,6 +1,6 @@
 ﻿namespace EM.Domain.Enums;
 
-public enum ETelefone
+public enum ETipoTelefone
 {
     Fixo = 1,
     Celular = 2

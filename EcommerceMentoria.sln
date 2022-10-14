@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EM.Apresentacao", "EM.Apres
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{0122F8ED-E553-4705-8B82-A2E41C7C7549}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EM.Service", "EM.Service\EM.Service.csproj", "{26AFE4D7-1F03-47E2-B5D4-AE90C0B78E80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EM.Service", "EM.Service\EM.Service.csproj", "{26AFE4D7-1F03-47E2-B5D4-AE90C0B78E80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

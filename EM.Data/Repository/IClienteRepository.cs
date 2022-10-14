@@ -11,6 +11,6 @@ namespace EM.Data.Repository
         Task AdicionarAsync(Cliente entity);
         Task<Cliente> PesquisarPorIdAsync(Guid id);
         Task EditarAsync(Cliente clienteSalvar);
-        Task ExcluirAsync(Guid id);
+        Task ExcluirAsync(Cliente id);
     }
 }

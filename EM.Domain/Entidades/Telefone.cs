@@ -9,7 +9,7 @@ namespace EM.Domain.Entidades
         {
         }
 
-        public Telefone(ETelefone tipo, string numero, DateTime dataCadastro)
+        public Telefone(ETipoTelefone tipo, string numero, DateTime dataCadastro)
         {
             Tipo = tipo;
             Numero = numero;
@@ -20,7 +20,7 @@ namespace EM.Domain.Entidades
 
         public Guid ClienteId { get; set; }
 
-        public ETelefone Tipo { get; set; }
+        public ETipoTelefone Tipo { get; set; }
 
         public string Numero { get; set; }
 

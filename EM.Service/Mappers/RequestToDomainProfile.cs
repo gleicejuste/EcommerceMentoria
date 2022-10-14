@@ -9,9 +9,11 @@ public class RequestToDomainProfile : Profile
 {
     public RequestToDomainProfile()
     {
-        CreateMap<NovoClienteRequest, Cliente>(MemberList.Destination)
-            .ForMember(dest => dest.DataCadastro, opt => opt.MapFrom(_ => DateTime.Now));
+        CreateMap<ClienteRequest, Cliente>(MemberList.Destination)
+            .ForMember(dest => dest.DataCadastro, opt => opt.MapFrom(_ => DateTime.Now))
+            .ForMember(dest => dest.Ativo, opt => opt.MapFrom(_ => true));
 
-        CreateMap<NovoTelefoneRequest, Telefone>(MemberList.Destination);
+        CreateMap<TelefoneRequest, Telefone>(MemberList.Destination)
+            .ForMember(dest => dest.DataCadastro, opt => opt.MapFrom(_ => DateTime.Now));
     }
 }

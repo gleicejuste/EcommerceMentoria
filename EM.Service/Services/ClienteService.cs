@@ -5,7 +5,6 @@ using AutoMapper;
 using EM.Data.Repository;
 using EM.Domain.Entidades;
 using EM.Domain.Modelos;
-using EM.Service.Factory;
 
 namespace EM.Service.Services
 {
@@ -20,10 +19,9 @@ namespace EM.Service.Services
             _repository = repository;
         }
 
-        public async Task AdicionarAsync(NovoClienteRequest request)
+        public async Task AdicionarAsync(ClienteRequest clienteRequest)
         {
-            var cliente = _mapper.Map<Cliente>(request);
-            //  Cliente clienteSalvar = ClienteFactory.CriarClienteSalvar(request);
+            var cliente = _mapper.Map<Cliente>(clienteRequest);
             await _repository.AdicionarAsync(cliente);
         }
 
@@ -37,21 +35,26 @@ namespace EM.Service.Services
             return await _repository.PesquisarPorIdAsync(id);
         }
 
-        public async Task Editar(Guid id, NovoClienteRequest clienteRequest)
+        public async Task EditarAsync(Guid id, ClienteRequest clienteRequest)
         {
-            Cliente cliente = await _repository.PesquisarPorIdAsync(id);
-            if (cliente == null)
-            {
-                throw new DllNotFoundException();
-            }
-
-            Cliente clienteSalvar = ClienteFactory.CriarClienteSalvar(clienteRequest);
-            await _repository.EditarAsync(clienteSalvar);
+            var cliente = _mapper.Map<Cliente>(clienteRequest);
+            await _repository.EditarAsync(cliente);
         }
 
-        public async Task Excluir(Guid id)
+        public async Task ExcluirAsync(Cliente id)
         {
             await _repository.ExcluirAsync(id);
         }
+
+        public async Task AtivarDesativarAsync(Guid id, bool ativoInativo)
+        {
+            Cliente cliente = await _repository.PesquisarPorIdAsync(id);
+            if (cliente != null)
+            {
+                cliente.Ativo = ativoInativo;
+                await _repository.EditarAsync(cliente);
+            }
+        }
+        
     }
 }

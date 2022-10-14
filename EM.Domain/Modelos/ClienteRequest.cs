@@ -3,7 +3,7 @@ using EM.Domain.Enums;
 
 namespace EM.Domain.Modelos
 {
-    public class NovoClienteRequest
+    public class ClienteRequest
     {
         public string Nome { get; set; }
 
@@ -13,12 +13,12 @@ namespace EM.Domain.Modelos
 
         public string HashSenha { get; set; }
 
-        public ICollection<NovoTelefoneRequest> Telefones { get; set; }
+        public ICollection<TelefoneRequest> Telefones { get; set; }
     }
 
-    public class NovoTelefoneRequest
+    public class TelefoneRequest
     {
-        public ETelefone Tipo { get; set; }
+        public ETipoTelefone Tipo { get; set; }
 
         public string Numero { get; set; }
     }
