@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using EM.Data.Repository;
@@ -27,13 +28,8 @@ namespace EM.Service.Services
 
         public async Task<IEnumerable<ClienteResponse>> PesquisarTodosAsync()
         {
-            List<ClienteResponse> listaRetorno = new List<ClienteResponse>();
-            IEnumerable<Cliente> listaClientes = await _repository.PesquisarTodosAsync();
-            foreach(Cliente cliente in listaClientes)
-            {
-                listaRetorno.Add(_mapper.Map<ClienteResponse>(cliente));
-            }
-            return listaRetorno;
+            var clientesDb = await _repository.PesquisarTodosAsync();
+            return _mapper.Map<IEnumerable<ClienteResponse>>(clientesDb);
         }
 
         public async Task<ClienteResponse> PesquisarPorIdAsync(Guid id)
@@ -45,22 +41,27 @@ namespace EM.Service.Services
 
         public async Task<Cliente> PesquisarPorIdRetornoClienteAsync(Guid id)
         {
-              return await _repository.PesquisarPorIdAsync(id);
+            return await _repository.PesquisarPorIdAsync(id);
         }
 
         public async Task<IEnumerable<ClienteResponse>> PesquisarComFiltrosAsync(
             string nome, string documento, string email)
         {
+            var clientesDb = await _repository.PesquisarComFiltrosAsync(nome, documento, email);
+            if (clientesDb == null || !clientesDb.Any())
+                return Enumerable.Empty<ClienteResponse>();
 
-            List<ClienteResponse> listaRetorno = new List<ClienteResponse>();
-            IEnumerable<Cliente> listaClientes = await _repository.PesquisarComFiltrosAsync(nome, documento, email);
-            foreach (Cliente cliente in listaClientes)
-            {
-                listaRetorno.Add(_mapper.Map<ClienteResponse>(cliente));
-            }
-            return listaRetorno;
+            // Manipulando lista
+            var listaFiltrada = clientesDb.Where(c => c.Ativo).ToList();
+
+            // foreach (var cliente in listaFiltrada)
+            // {
+            //     cliente.DataCadastro = DateTime.Now;
+            // }
+            // listaFiltrada.Add(new Cliente());
+
+            return _mapper.Map<IEnumerable<ClienteResponse>>(listaFiltrada);
         }
-        
 
         public async Task EditarAsync(ClienteRequest clienteRequest)
         {
@@ -82,6 +83,5 @@ namespace EM.Service.Services
                 await _repository.EditarAsync(cliente);
             }
         }
-        
     }
 }

@@ -1,6 +1,6 @@
-﻿using EM.Domain.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using EM.Domain.Enums;
 
 namespace EM.Domain.Modelos
 {
@@ -13,7 +13,7 @@ namespace EM.Domain.Modelos
 
         public string Email { get; set; }
 
-        public ICollection<TelefoneResponse> Telefones { get; set; }
+        public IEnumerable<TelefoneResponse> Telefones { get; set; }
     }
 
     public class TelefoneResponse
