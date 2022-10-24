@@ -40,15 +40,36 @@ namespace EM.Data.Repository
 
         public async Task<IEnumerable<Cliente>> PesquisarComFiltrosAsync(string nome, string documento, string email)
         {
-            //síncrono
-            return _dbContext.Clientes
-                .Where(c => c.Nome.Equals(nome) && c.Documento.Equals(documento) && c.Email.Equals(email))
+            var queryable = _dbContext.Clientes
+                .AsNoTracking()
                 .Include(c => c.Telefones)
-                .AsNoTracking();
+                .OrderBy(c => c.Nome)
+                .ThenBy(c => c.Email)
+                .AsQueryable();
 
+            if (!string.IsNullOrWhiteSpace(nome))
+            {
+                // WHERE [Cliente] LIKE '%FILTRO%'
+                // queryable = queryable.Where(c => EF.Functions.Like(c.Nome, $"%{nome}%"));
+
+                // WHERE [Cliente] LIKE 'FILTRO'
+                // queryable = queryable.Where(c => c.Nome.Contains(nome));
+
+                // WHERE [Cliente] = 'FILTRO'
+                // queryable = queryable.Where(c => c.Nome.ToLower() == nome.ToLower());
+                queryable = queryable.Where(c => c.Nome.Equals(nome));
+            }
+
+            // IsNullOrWhiteSpace verifica se é nulo, se é vazio ou se contém espaços vazios '   '
+            if (!string.IsNullOrWhiteSpace(documento))
+                queryable = queryable.Where(c => c.Documento.Equals(documento));
+
+            if (!string.IsNullOrWhiteSpace(email))
+                queryable = queryable.Where(c => c.Email.Equals(email));
+
+            return await queryable.ToListAsync();
         }
 
-                
         public async Task EditarAsync(Cliente clienteSalvar)
         {
             _dbContext.Update(clienteSalvar);
