@@ -25,17 +25,44 @@ namespace EM.Service.Services
             await _repository.AdicionarAsync(cliente);
         }
 
-        public async Task<IEnumerable<Cliente>> PesquisarTodosAsync()
+        public async Task<IEnumerable<ClienteResponse>> PesquisarTodosAsync()
         {
-            return await _repository.PesquisarTodosAsync();
+            List<ClienteResponse> listaRetorno = new List<ClienteResponse>();
+            IEnumerable<Cliente> listaClientes = await _repository.PesquisarTodosAsync();
+            foreach(Cliente cliente in listaClientes)
+            {
+                listaRetorno.Add(_mapper.Map<ClienteResponse>(cliente));
+            }
+            return listaRetorno;
         }
 
-        public async Task<Cliente> PesquisarPorIdAsync(Guid id)
+        public async Task<ClienteResponse> PesquisarPorIdAsync(Guid id)
         {
-            return await _repository.PesquisarPorIdAsync(id);
+            //Cliente cliente = await _repository.PesquisarPorIdAsync(id);
+            // return _mapper.Map<ClienteResponse>(clinte);
+            return _mapper.Map<ClienteResponse>(await _repository.PesquisarPorIdAsync(id));
         }
 
-        public async Task EditarAsync(Guid id, ClienteRequest clienteRequest)
+        public async Task<Cliente> PesquisarPorIdRetornoClienteAsync(Guid id)
+        {
+              return await _repository.PesquisarPorIdAsync(id);
+        }
+
+        public async Task<IEnumerable<ClienteResponse>> PesquisarComFiltrosAsync(
+            string nome, string documento, string email)
+        {
+
+            List<ClienteResponse> listaRetorno = new List<ClienteResponse>();
+            IEnumerable<Cliente> listaClientes = await _repository.PesquisarComFiltrosAsync(nome, documento, email);
+            foreach (Cliente cliente in listaClientes)
+            {
+                listaRetorno.Add(_mapper.Map<ClienteResponse>(cliente));
+            }
+            return listaRetorno;
+        }
+        
+
+        public async Task EditarAsync(ClienteRequest clienteRequest)
         {
             var cliente = _mapper.Map<Cliente>(clienteRequest);
             await _repository.EditarAsync(cliente);

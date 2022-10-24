@@ -15,5 +15,9 @@ public class RequestToDomainProfile : Profile
 
         CreateMap<TelefoneRequest, Telefone>(MemberList.Destination)
             .ForMember(dest => dest.DataCadastro, opt => opt.MapFrom(_ => DateTime.Now));
+
+        CreateMap<Cliente, ClienteResponse>();
+
+        CreateMap<Telefone, TelefoneResponse>();
     }
 }

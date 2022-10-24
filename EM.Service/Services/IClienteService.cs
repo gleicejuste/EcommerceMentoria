@@ -8,10 +8,12 @@ namespace EM.Service.Services;
 
 public interface IClienteService
 {
-    Task<IEnumerable<Cliente>> PesquisarTodosAsync();
+    Task<IEnumerable<ClienteResponse>> PesquisarTodosAsync();
     Task AdicionarAsync(ClienteRequest request);
-    Task<Cliente> PesquisarPorIdAsync(Guid id);
-    Task EditarAsync(Guid id, ClienteRequest clienteRequest);
-    Task ExcluirAsync(Cliente id);
+    Task<ClienteResponse> PesquisarPorIdAsync(Guid id);
+    Task<Cliente> PesquisarPorIdRetornoClienteAsync(Guid id);
+    Task<IEnumerable<ClienteResponse>> PesquisarComFiltrosAsync(string nome, string documento, string email);
+    Task EditarAsync(ClienteRequest clienteRequest);
+    Task ExcluirAsync(Cliente cliente);
     Task AtivarDesativarAsync(Guid id, bool ativoInativo);
 }

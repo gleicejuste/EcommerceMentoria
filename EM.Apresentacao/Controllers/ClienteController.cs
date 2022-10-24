@@ -17,9 +17,9 @@ namespace EM.Apresentacao.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Adicionar([FromBody] ClienteRequest cliente)
+        public async Task<IActionResult> Adicionar([FromBody] ClienteRequest clienteRequest)
         {
-            await _service.AdicionarAsync(cliente);
+            await _service.AdicionarAsync(clienteRequest);
             return Ok();
         }
 
@@ -31,32 +31,39 @@ namespace EM.Apresentacao.Controllers
 
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> PesquisarPorId(Guid id)
+        public async Task<IActionResult> PesquisarPorId([FromRoute] Guid id)
         {
-            Cliente cliente = await _service.PesquisarPorIdAsync(id);
-            if (cliente != null)
+            ClienteResponse clienteResponse = await _service.PesquisarPorIdAsync(id);
+            if (clienteResponse != null)
             {
-                return Ok(cliente);
+                return Ok(clienteResponse);
             }
             return NotFound();
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Editar(Guid id, [FromBody] ClienteRequest clienteRequest)
+        [HttpGet("{nome}/{documento}/{email}")]
+        public async Task<IActionResult> PesquisarComFiltros(
+            [FromRoute] string nome, [FromRoute] string documento, [FromRoute] string email)
         {
-            Cliente cliente = await _service.PesquisarPorIdAsync(id);
-            if (cliente != null)
+            return Ok(await _service.PesquisarComFiltrosAsync(nome, documento, email));
+        }
+
+        [HttpPut()]
+        public async Task<IActionResult> Editar([FromBody] ClienteRequest clienteRequest)
+        {
+            ClienteResponse clienteResponse = await _service.PesquisarPorIdAsync(clienteRequest.Id);
+            if (clienteResponse != null)
             {
-                await _service.EditarAsync(id, clienteRequest);
+                await _service.EditarAsync(clienteRequest);
                 return Ok();
             }
             return NotFound();
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Excluir(Guid id)
+        public async Task<IActionResult> Excluir([FromRoute] Guid id)
         {
-            Cliente cliente = await _service.PesquisarPorIdAsync(id);
+            Cliente cliente = await _service.PesquisarPorIdRetornoClienteAsync(id);
             if (cliente != null)
             {
                 await _service.ExcluirAsync(cliente);
@@ -64,19 +71,16 @@ namespace EM.Apresentacao.Controllers
             }
             return NotFound();
 
-
-            //await _service.ExcluirAsync(id);
-            //return Ok();
         }
-                 
 
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> AtivarDesativar(Guid id, [FromBody] bool ativoInativo)
-        //{
-        //    await _service.AtivarDesativarAsync(id, ativoInativo);
-        //    return Ok();
 
-        //}
+        [HttpPut("{id}/{ativo}")]
+        public async Task<IActionResult> AtivarDesativar([FromRoute] Guid id, [FromRoute] bool ativo)
+        {
+            await _service.AtivarDesativarAsync(id, ativo);
+            return Ok();
+
+        }
 
     }
 
