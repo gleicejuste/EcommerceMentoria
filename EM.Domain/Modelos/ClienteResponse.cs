@@ -12,6 +12,8 @@ namespace EM.Domain.Modelos
         public string Documento { get; set; }
 
         public string Email { get; set; }
+        
+        public bool Ativo { get; set; }
 
         public IEnumerable<TelefoneResponse> Telefones { get; set; }
     }

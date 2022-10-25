@@ -20,7 +20,7 @@ namespace EM.Service.Services
             _repository = repository;
         }
 
-        public async Task AdicionarAsync(ClienteRequest clienteRequest)
+        public async Task AdicionarAsync(ClienteNovoRequest clienteRequest)
         {
             var cliente = _mapper.Map<Cliente>(clienteRequest);
             await _repository.AdicionarAsync(cliente);
@@ -32,34 +32,22 @@ namespace EM.Service.Services
             return _mapper.Map<IEnumerable<ClienteResponse>>(clientesDb);
         }
 
-        public async Task<ClienteResponse> PesquisarPorIdAsync(Guid id)
+        public async Task<ClienteResponse> PesquisarPorIdAsync(Guid idCliente)
         {
-            //Cliente cliente = await _repository.PesquisarPorIdAsync(id);
+            //Cliente cliente = await _repository.PesquisarPorIdAsync(idCliente);
             // return _mapper.Map<ClienteResponse>(clinte);
-            return _mapper.Map<ClienteResponse>(await _repository.PesquisarPorIdAsync(id));
-        }
-
-        public async Task<Cliente> PesquisarPorIdRetornoClienteAsync(Guid id)
-        {
-            return await _repository.PesquisarPorIdAsync(id);
+            return _mapper.Map<ClienteResponse>(await _repository.PesquisarPorIdAsync(idCliente));
         }
 
         public async Task<IEnumerable<ClienteResponse>> PesquisarComFiltrosAsync(
-            string nome, string documento, string email)
+            string nome, string documento, string email, string dataInicial, string dataFinal)
         {
-            var clientesDb = await _repository.PesquisarComFiltrosAsync(nome, documento, email);
+            var clientesDb = await _repository.PesquisarComFiltrosAsync(nome, documento, email, dataInicial, dataFinal);
             if (clientesDb == null || !clientesDb.Any())
                 return Enumerable.Empty<ClienteResponse>();
 
             // Manipulando lista
             var listaFiltrada = clientesDb.Where(c => c.Ativo).ToList();
-
-            // foreach (var cliente in listaFiltrada)
-            // {
-            //     cliente.DataCadastro = DateTime.Now;
-            // }
-            // listaFiltrada.Add(new Cliente());
-
             return _mapper.Map<IEnumerable<ClienteResponse>>(listaFiltrada);
         }
 
@@ -69,17 +57,21 @@ namespace EM.Service.Services
             await _repository.EditarAsync(cliente);
         }
 
-        public async Task ExcluirAsync(Cliente id)
+        public async Task ExcluirAsync(Guid idCliente)
         {
-            await _repository.ExcluirAsync(id);
-        }
-
-        public async Task AtivarDesativarAsync(Guid id, bool ativoInativo)
-        {
-            Cliente cliente = await _repository.PesquisarPorIdAsync(id);
+            Cliente cliente = await _repository.PesquisarPorIdAsync(idCliente);
             if (cliente != null)
             {
-                cliente.Ativo = ativoInativo;
+                await _repository.ExcluirAsync(cliente);
+            }
+        }
+
+        public async Task AtivarDesativarAsync(Guid idCliente, bool ativo)
+        {
+            Cliente cliente = await _repository.PesquisarPorIdAsync(idCliente);
+            if (cliente != null)
+            {
+                cliente.Ativo = ativo;
                 await _repository.EditarAsync(cliente);
             }
         }

@@ -1,5 +1,4 @@
-﻿using EM.Domain.Entidades;
-using EM.Domain.Modelos;
+﻿using EM.Domain.Modelos;
 using EM.Service.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +16,7 @@ namespace EM.Apresentacao.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Adicionar([FromBody] ClienteRequest clienteRequest)
+        public async Task<IActionResult> Adicionar([FromBody] ClienteNovoRequest clienteRequest)
         {
             await _service.AdicionarAsync(clienteRequest);
             return Ok();
@@ -41,11 +40,15 @@ namespace EM.Apresentacao.Controllers
             return NotFound();
         }
 
-        [HttpGet("{nome}/{documento}/{email}")]
+        [HttpGet("{nome}/{documento}/{email}/{dataInicial}/{dataFinal}")]
         public async Task<IActionResult> PesquisarComFiltros(
-            [FromRoute] string nome, [FromRoute] string documento, [FromRoute] string email)
+            [FromRoute] string nome, 
+            [FromRoute] string documento, 
+            [FromRoute] string email, 
+            [FromRoute] string dataInicial, 
+            [FromRoute] string dataFinal)
         {
-            return Ok(await _service.PesquisarComFiltrosAsync(nome, documento, email));
+            return Ok(await _service.PesquisarComFiltrosAsync(nome, documento, email, dataInicial, dataFinal));
         }
 
         [HttpPut()]
@@ -60,24 +63,18 @@ namespace EM.Apresentacao.Controllers
             return NotFound();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Excluir([FromRoute] Guid id)
+        [HttpDelete("{idCliente}")]
+        public async Task<IActionResult> Excluir([FromRoute] Guid idCliente)
         {
-            Cliente cliente = await _service.PesquisarPorIdRetornoClienteAsync(id);
-            if (cliente != null)
-            {
-                await _service.ExcluirAsync(cliente);
-                return Ok();
-            }
-            return NotFound();
-
+            await _service.ExcluirAsync(idCliente);
+            return Ok();
         }
 
 
-        [HttpPut("{id}/{ativo}")]
-        public async Task<IActionResult> AtivarDesativar([FromRoute] Guid id, [FromRoute] bool ativo)
+        [HttpPut("{idCliente}/{ativo}")]
+        public async Task<IActionResult> AtivarDesativar([FromRoute] Guid idCliente, [FromRoute] bool ativo)
         {
-            await _service.AtivarDesativarAsync(id, ativo);
+            await _service.AtivarDesativarAsync(idCliente, ativo);
             return Ok();
 
         }

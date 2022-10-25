@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EM.Domain.Entidades;
-using EM.Domain.Modelos;
 using Microsoft.EntityFrameworkCore;
 
 namespace EM.Data.Repository
@@ -38,7 +37,8 @@ namespace EM.Data.Repository
                 .FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public async Task<IEnumerable<Cliente>> PesquisarComFiltrosAsync(string nome, string documento, string email)
+        public async Task<IEnumerable<Cliente>> PesquisarComFiltrosAsync(
+            string nome, string documento, string email, string dataInicial, string dataFinal)
         {
             var queryable = _dbContext.Clientes
                 .AsNoTracking()
@@ -50,22 +50,39 @@ namespace EM.Data.Repository
             if (!string.IsNullOrWhiteSpace(nome))
             {
                 // WHERE [Cliente] LIKE '%FILTRO%'
-                // queryable = queryable.Where(c => EF.Functions.Like(c.Nome, $"%{nome}%"));
+                 queryable = queryable.Where(c => EF.Functions.Like(c.Nome, $"%{nome}%"));
 
                 // WHERE [Cliente] LIKE 'FILTRO'
                 // queryable = queryable.Where(c => c.Nome.Contains(nome));
 
                 // WHERE [Cliente] = 'FILTRO'
                 // queryable = queryable.Where(c => c.Nome.ToLower() == nome.ToLower());
-                queryable = queryable.Where(c => c.Nome.Equals(nome));
+                //queryable = queryable.Where(c => c.Nome.Equals(nome));
             }
 
             // IsNullOrWhiteSpace verifica se é nulo, se é vazio ou se contém espaços vazios '   '
             if (!string.IsNullOrWhiteSpace(documento))
-                queryable = queryable.Where(c => c.Documento.Equals(documento));
+                queryable = queryable.Where(c => EF.Functions.Like(c.Documento, $"%{documento}%"));
 
             if (!string.IsNullOrWhiteSpace(email))
-                queryable = queryable.Where(c => c.Email.Equals(email));
+                queryable = queryable.Where(c => EF.Functions.Like(c.Email, $"%{email}%"));
+
+
+            if (!string.IsNullOrWhiteSpace(dataInicial) && string.IsNullOrWhiteSpace(dataFinal))
+            {
+                queryable = queryable.Where(c => c.DataCadastro == DateTime.Parse(dataInicial));
+            }
+
+            if (string.IsNullOrWhiteSpace(dataInicial) && !string.IsNullOrWhiteSpace(dataFinal))
+            {
+                queryable = queryable.Where(c => c.DataCadastro <= DateTime.Parse(dataFinal));
+            }
+
+            if (!string.IsNullOrWhiteSpace(dataInicial) && !string.IsNullOrWhiteSpace(dataFinal))
+            {
+                queryable = queryable.Where(c => c.DataCadastro >= DateTime.Parse(dataInicial));
+                queryable = queryable.Where(c => c.DataCadastro <= DateTime.Parse(dataFinal));
+            }
 
             return await queryable.ToListAsync();
         }
