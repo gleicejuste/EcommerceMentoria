@@ -10,7 +10,7 @@ public interface IClienteService
 {
     Task<IEnumerable<ClienteResponse>> PesquisarTodosAsync();
     Task AdicionarAsync(ClienteNovoRequest clienteRequest);
-    Task<ClienteResponse> PesquisarPorIdAsync(Guid idCliente);
+    Task<Cliente> PesquisarPorIdAsync(Guid idCliente);
     Task<IEnumerable<ClienteResponse>> PesquisarComFiltrosAsync(string nome, string documento, string email, string dataInicial, string dataFinal);
     Task EditarAsync(ClienteRequest clienteRequest);
     Task ExcluirAsync(Guid idCliente);

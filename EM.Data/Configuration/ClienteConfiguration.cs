@@ -34,7 +34,7 @@ namespace EM.Data.Configuration
             builder.Property(cliente => cliente.HashSenha)
                 .IsRequired()
                 .IsUnicode(false)
-                .HasMaxLength(12);
+                .HasMaxLength(255);
 
             builder.Property(cliente => cliente.DataCadastro)
                 .IsRequired();

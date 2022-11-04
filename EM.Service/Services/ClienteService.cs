@@ -32,11 +32,12 @@ namespace EM.Service.Services
             return _mapper.Map<IEnumerable<ClienteResponse>>(clientesDb);
         }
 
-        public async Task<ClienteResponse> PesquisarPorIdAsync(Guid idCliente)
+        public async Task<Cliente> PesquisarPorIdAsync(Guid idCliente)
         {
             //Cliente cliente = await _repository.PesquisarPorIdAsync(idCliente);
             // return _mapper.Map<ClienteResponse>(clinte);
-            return _mapper.Map<ClienteResponse>(await _repository.PesquisarPorIdAsync(idCliente));
+            //return _mapper.Map<ClienteResponse>(await _repository.PesquisarPorIdAsync(idCliente));
+            return await _repository.PesquisarPorIdAsync(idCliente);
         }
 
         public async Task<IEnumerable<ClienteResponse>> PesquisarComFiltrosAsync(
@@ -53,6 +54,10 @@ namespace EM.Service.Services
 
         public async Task EditarAsync(ClienteRequest clienteRequest)
         {
+            //editar
+            //busca por id
+            //faz o mapper
+            //perde os campos que nao editam
             var cliente = _mapper.Map<Cliente>(clienteRequest);
             await _repository.EditarAsync(cliente);
         }

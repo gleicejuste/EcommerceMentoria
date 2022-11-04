@@ -1,4 +1,5 @@
-﻿using EM.Domain.Modelos;
+﻿using EM.Domain.Entidades;
+using EM.Domain.Modelos;
 using EM.Service.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,10 +33,10 @@ namespace EM.Apresentacao.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> PesquisarPorId([FromRoute] Guid id)
         {
-            ClienteResponse clienteResponse = await _service.PesquisarPorIdAsync(id);
-            if (clienteResponse != null)
+            Cliente cliente = await _service.PesquisarPorIdAsync(id);
+            if (cliente != null)
             {
-                return Ok(clienteResponse);
+                return Ok(cliente);
             }
             return NotFound();
         }
@@ -54,8 +55,8 @@ namespace EM.Apresentacao.Controllers
         [HttpPut()]
         public async Task<IActionResult> Editar([FromBody] ClienteRequest clienteRequest)
         {
-            ClienteResponse clienteResponse = await _service.PesquisarPorIdAsync(clienteRequest.Id);
-            if (clienteResponse != null)
+            Cliente cliente = await _service.PesquisarPorIdAsync(clienteRequest.Id);
+            if (cliente != null)
             {
                 await _service.EditarAsync(clienteRequest);
                 return Ok();
