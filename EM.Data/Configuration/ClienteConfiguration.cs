@@ -44,6 +44,8 @@ namespace EM.Data.Configuration
 
             builder.HasMany(cliente => cliente.Telefones).WithOne().HasForeignKey(telefone => telefone.ClienteId);
 
+            builder.HasMany(cliente => cliente.Pedidos).WithOne().HasForeignKey(pedido => pedido.ClienteId);
+
         }
     }
 }

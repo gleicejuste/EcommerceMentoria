@@ -1,5 +1,4 @@
 ﻿using EM.Domain.Enums;
-using System;
 using System.Collections.Generic;
 
 namespace EM.Domain.Modelos

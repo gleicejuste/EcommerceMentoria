@@ -5,9 +5,26 @@ namespace EM.Domain.Entidades
 {
     public class Cliente
     {
-        public Cliente()
-        {
-        }
+        
+        public Guid Id { get; set; }
+
+        public string Nome { get; set; }
+
+        public string Documento { get; set; }
+
+        public string Email { get; set; }
+
+        public string HashSenha { get; set; }
+
+        public DateTime DataCadastro { get; set; }
+
+        public bool Ativo { get; set; }
+
+        public ICollection<Telefone> Telefones { get; set; }
+
+        public ICollection<Pedido> Pedidos { get; set; }
+
+        public Cliente() { }
 
         public Cliente(
             string nome,
@@ -27,22 +44,6 @@ namespace EM.Domain.Entidades
             Ativo = ativo;
             Telefones = telefones;
         }
-
-        public Guid Id { get; set; }
-
-        public string Nome { get; set; }
-
-        public string Documento { get; set; }
-
-        public string Email { get; set; }
-
-        public string HashSenha { get; set; }
-
-        public DateTime DataCadastro { get; set; }
-
-        public bool Ativo { get; set; }
-
-        public ICollection<Telefone> Telefones { get; set; }
     }
 
 }

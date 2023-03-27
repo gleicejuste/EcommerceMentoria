@@ -12,6 +12,8 @@ namespace EM.Data
 
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Telefone> Telefones { get; set; }
+        public DbSet<Produto> Produtos { get; set; }
+        //public DbSet<Pedido> Pedidos { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

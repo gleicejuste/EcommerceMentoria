@@ -9,9 +9,9 @@ namespace EM.Domain.Util
         private static readonly RandomNumberGenerator rng = RandomNumberGenerator.Create();
         public static string GerarHashSenha(string password)
         {
-            const KeyDerivationPrf Pbkdf2Prf = KeyDerivationPrf.HMACSHA1; 
+            const KeyDerivationPrf Pbkdf2Prf = KeyDerivationPrf.HMACSHA512; 
             const int Pbkdf2IterCount = 1000; 
-            const int Pbkdf2SubkeyLength = 256 / 8; 
+            const int Pbkdf2SubkeyLength = 25; 
             const int SaltSize = 128 / 8; 
           
             byte[] salt = new byte[SaltSize];

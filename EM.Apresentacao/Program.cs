@@ -28,6 +28,7 @@ builder.Services.AddDbContext<ContextoPrincipal>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("EMConnectionString"), b => b.MigrationsAssembly("EM.Apresentacao")));
 
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
+builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
 
 var app = builder.Build();
 
